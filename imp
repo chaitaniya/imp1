@@ -1,0 +1,39 @@
+Sqoop:
+Mysql basic commands:
+-Create database db;
+-Create table new(id int,name varchar(20));
+-insert into new(id,name) values(1,”hi”); (or) (2,’fi’) 
+Mysql to hdfs:
+sqoop import –connect jdbc:mysql://localhost/databasename –username root –P –table ‘tablename’ –m1
+hdfs to mysql:
+sqoop export –connect jdbc:mysql://localhost/databasename –username root –P –table ‘tablename’ –m1 --export–dir hdfsdirname
+mysql to hive
+sqoop import –connect jdbc:mysql://localhost/databasename  –username root –P –table tablename –m 1 --hive-import –create-hive-table –hive-table databasename.tablename
+sqoop to hbase 
+sqoop import –connect jdbc:mysql://localhost/databasename –username root –P –table tablename --hbase-table tablename –column-family familyname –hbase-row-key id –m1
+HBASE:
+-create ‘tablename’,’familyname’;
+-disable ‘tablename’
+-drop ‘tablename’
+Hive:
+-create table tablename(id int,name string) row format delimited fields terminated by ‘,’;
+-load data local inpath ‘/home/acadgild/Desktop/de.txt’ into table tablename;
+-select name from tablename where id>3;
+(hive to local system- insert overwrite local directory ‘/home/acadgild/new’ row format delimited fields terminated by ‘,’ select * from name;)
+
+
+
+Partition:
+Static:
+-create statpartblname(id int,name string) partitioned by(country string) row format delimited fields terminated by ‘,’;
+-insert overwrite table statpartblname partition(country=’ind’) select id,name from tablename group by country having country=’ind’;
+Dynamic:
+-set hive.exec.dynamic.partition.mode=nonstrict;
+- set hive.exec.max.dynamic.partitions.pernode=200;
+-create dynpartblname(id int,name string) partitioned by(country string) row format delimited fields terminated by ‘,’;
+- insert overwrite table statpartblname partition(country) select id,name from tablename group by country
+-hadoop fs –ls ‘/user/hive/warehouse/db’
+-select where groupby having 
+JOINS:
+-
+
